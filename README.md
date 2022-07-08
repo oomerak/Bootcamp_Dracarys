@@ -1,2 +1,2 @@
-# dracarysbootcamp
-Global Ai Hub Bootcamp Projects
+# Son Güncelleme ile Eklememiz Gerekenler
+
