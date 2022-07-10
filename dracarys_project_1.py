@@ -1,4 +1,3 @@
-from telnetlib import STATUS
 import pandas as pd
 import numpy as np
 
