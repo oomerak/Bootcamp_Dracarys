@@ -61,7 +61,11 @@ while process2 == True:
 
     else:
         process2 = False
-
+import os
+try:
+    os.open("test.txt", os.O_RDONLY)
+except OSError as err:
+    print ("I got this error: ", err)
 
 for i in range (studentamount):
     process = True
@@ -72,21 +76,24 @@ for i in range (studentamount):
             first_name = input("Please enter student's first name: ")
             last_name = input("Please enter student's last name: ")
             point = int(input("Please enter student's point: "))
+            
 
             
         except TypeError:
             print('Oh no! A TypeError has occured')
             process = True
 
+
         except ValueError:
             print('A ValueError occured!')
             process = True
+
 
         else:
             print('No exception')
             process = False
 
-    
+
     if process == False:
         lesson_grade = conv_grade(point)
         situation = situation2(point)
@@ -97,15 +104,28 @@ for i in range (studentamount):
         student_report_file = open("student_report.csv" , "a") # a: Writing to new line (end) | w: Deleting first line and writing the new value
 
         student_report_file.write(newStudentData)
+
+        
     
+# my_dict = {"Name":[],"Address":[],"Age":[]};
+
+# my_dict["Name"].append("Guru")
+# my_dict["Address"].append("Mumbai")
+# my_dict["Age"].append(30)	
+# print(my_dict
+
 
 
 
 df = pd.read_csv(r"student_report.csv")
 writer = pd.ExcelWriter('Proje1.xlsx')
 df.to_excel(writer)
- 
+
 writer.save()
 
 
 print("The dataframe of students are saved to student_report.csv file.\nDataframe has been converted to excel file.")
+
+
+writer = pd.ExcelWriter('Proje1.xlsx')
+df.to_excel(writer)
