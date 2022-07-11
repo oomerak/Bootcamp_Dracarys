@@ -2,14 +2,8 @@ import pandas as pd
 import numpy as np
 
 
-
-student_number2 = []
-first_name2 = []
-last_name2 = []
-points2 = []
-
-#Define a function conv_grade
-def conv_grade(points2):
+# Grade Result Function
+def grade_func(points2):
     if points2 >=80 :
         return 'A'
     elif points2 >=70:
@@ -21,29 +15,41 @@ def conv_grade(points2):
     else:
         return 'F'
 
+# Status Result
 def situation2(point):
     if point<50:
         return "FAILED"
     else:
         return "PASSED"
 
+# We dont want to numbers in input values 
+def checkStrings(name):
+    if any(chr.isdigit() for chr in name) == True:
+        raise InvalidValueInStrıngError
+    else:
+        pass
 
-#Define a function. That takes student name and points.
-def message(student_number, first_name, last_name, points, lesson):
-    print(f"Student number : {student_number}, {first_name} {last_name} scored {points}/100 points in {lesson} and got the letter '{conv_grade(points)}' ")
+# Is point between 0 and 100?
+def pointValueCheck(pts):
+    if 0<=pts<=100:
+        pass
+    else:
+        raise PointValueCheckError
 
+# We made this for catch numbers in strings
+class InvalidValueInStrıngError(ValueError):
+    pass
 
-#Converting the Dataframe(csv) file to excel (xlsx) file
+#Checking point and getting error when point is lower than 0 and bigger than 100
+class PointValueCheckError(ValueError):
+    pass
 
-def convert2Excel1():
+#DATA dict of Students
+data = {}
 
-    df = pd.read(r"student_report.csv")
-    c2e = df.to_excel(r"student_report.xlsx" , index = None , header = False)
+#Column List for Student Amount  
+column = []
 
-
-
-
-    
 
 #Title for MATH lesson
 print("Application for MATH Lesson \n-------------------------------\n")
@@ -51,81 +57,77 @@ print("Application for MATH Lesson \n-------------------------------\n")
 
 process2 = True
 
-
+# For Getting Student(s) Amount From User
 while process2 == True:
     try:
-        studentamount = int(input("Please enter number of students\n"))
+        studentamount = int(input("Please enter number of students\n----------\n"))
 
     except ValueError:
         process2 = True
 
     else:
         process2 = False
-import os
-try:
-    os.open("test.txt", os.O_RDONLY)
-except OSError as err:
-    print ("I got this error: ", err)
+
+
 
 for i in range (studentamount):
     process = True
 
     while process == True:
         try:
-            student_number = int(input("Please enter student's ID: "))
+            print(f"STUDENT {i+1}: ")
+            student_number = int(input("\nPlease enter student's ID: "))
             first_name = input("Please enter student's first name: ")
+            checkStrings(first_name)    
             last_name = input("Please enter student's last name: ")
+            checkStrings(last_name)
             point = int(input("Please enter student's point: "))
-            
+            pointValueCheck(point)        
 
-            
+        except PointValueCheckError:
+            print("---\nYour exam point must be between 0 and 100 !\n---\n")
+            process = True
+    
+        except InvalidValueInStrıngError:
+            print("---\nYou can't enter any number in first and last name!\n---\n")
+            process = True
+
         except TypeError:
             print('Oh no! A TypeError has occured')
             process = True
 
 
         except ValueError:
-            print('A ValueError occured!')
+            print('A ValueError occured!\n-----\n')
             process = True
 
 
         else:
-            print('No exception')
+            print(f'Student {i+1} is Saved.\n')
             process = False
 
+   
 
     if process == False:
-        lesson_grade = conv_grade(point)
+        lesson_grade = grade_func(point)
         situation = situation2(point)
 
-        newStudentData = first_name + "," + last_name + "," + str(student_number) + "," + str(point) + "," + lesson_grade + "," + situation + "\n"
+        #Four column name
+        aboutstudent = str("Student " + str(i+1))
+        column.append(aboutstudent)
 
-        
-        student_report_file = open("student_report.csv" , "a") # a: Writing to new line (end) | w: Deleting first line and writing the new value
+        newDict = {aboutstudent : [first_name,last_name,student_number,point,lesson_grade,situation]}
+        data.update(newDict)
 
-        student_report_file.write(newStudentData)
+       
 
-        
-    
-# my_dict = {"Name":[],"Address":[],"Age":[]};
-
-# my_dict["Name"].append("Guru")
-# my_dict["Address"].append("Mumbai")
-# my_dict["Age"].append(30)	
-# print(my_dict
-
-
-
-
-df = pd.read_csv(r"student_report.csv")
-writer = pd.ExcelWriter('Proje1.xlsx')
+df = pd.DataFrame.from_dict(data , orient="index" , columns=["First Name","Last_name","Student Number","Point", "Grade" , "Status"])
+print(df)      
+print("---------- --------")
+writer = pd.ExcelWriter('Lesson Report.xlsx')
 df.to_excel(writer)
-
 writer.save()
+print("\nDataframe has been converted to excel file.")
+print("---------- END --------")
 
 
-print("The dataframe of students are saved to student_report.csv file.\nDataframe has been converted to excel file.")
-
-
-writer = pd.ExcelWriter('Proje1.xlsx')
-df.to_excel(writer)
