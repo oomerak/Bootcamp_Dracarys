@@ -124,7 +124,7 @@ for i in range (studentamount):
 df = pd.DataFrame.from_dict(data , orient="index" , columns=["First Name","Last_name","Student Number","Point", "Grade" , "Status"])
 print(df)      
 print("---------- --------")
-writer = pd.ExcelWriter('Lesson Report.xlsx')
+writer = pd.ExcelWriter('Lesson Report.xlsx' , mode="a")
 df.to_excel(writer)
 writer.save()
 print("\nDataframe has been converted to excel file.")
