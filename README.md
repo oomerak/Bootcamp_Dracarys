@@ -1,2 +1,2 @@
-# Son Güncelleme ile Eklememiz Gerekenler
+# Project 1 is finished.  Congratulations dear mates. 🚀
 
