@@ -56,7 +56,6 @@ print("Application for MATH Lesson \n-------------------------------\n")
 
 
 process2 = True
-
 # For Getting Student(s) Amount From User
 while process2 == True:
     try:
@@ -124,8 +123,10 @@ for i in range (studentamount):
 df = pd.DataFrame.from_dict(data , orient="index" , columns=["First Name","Last Name","Student Number","Point", "Grade" , "Status"])
 print(df)      
 print("---------- --------")
-writer = pd.ExcelWriter('Lesson Report.xlsx' , mode="w")
-df.to_excel(writer)
+writer = pd.ExcelWriter('Lesson Report.xlsx' , mode="w" )
+df.to_excel(writer , sheet_name="Students and Results")
+writer.sheets["Students and Results"]
+
 writer.save()
 print("\nDataframe has been converted to excel file.")
 print("---------- END --------")
