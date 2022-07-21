@@ -28,7 +28,7 @@ for x in ["Runtime", "IMDB Score"]:
  
     max = q75+(1.5*intr_qr)
     min = q25-(1.5*intr_qr)
- 
+  
     data.loc[data[x] < min,x] = np.nan
     data.loc[data[x] > max,x] = np.nan
 
