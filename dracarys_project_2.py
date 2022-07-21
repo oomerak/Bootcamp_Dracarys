@@ -130,7 +130,7 @@ class questions():
         fig = px.bar(data_frame=genre, x=genre.index, y=genre.values, labels={"y":"Number of Movies from the Genre", "index":"Genres"})
         fig.update_layout(xaxis={"categoryorder":"total descending"})
         fig.show()
-
+ 
     # Q6 - Veri setinde bulunan filmlerde en çok kullanılan 3 dili bulunuz.
     def question6():
         TopLanguage = data['Language'].value_counts()
